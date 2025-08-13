@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Cresol - Interativo</title>
+<style>
+    body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #f4f6fa;
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        margin: 30px 0;
+        color: #1a73e8;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    #qlik-objects-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        max-width: 1400px;
+        margin: 0 auto 50px auto;
+        padding: 0 20px;
+    }
+
+    .qlik-object-wrapper {
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        transform: translateY(20px);
+        opacity: 0;
+        transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+
+    .qlik-object-wrapper.loaded {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .qlik-object-wrapper:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+    }
+
+    .qlik-object {
+        width: 100%;
+        border: none;
+        display: block;
+    }
+
+    .loader {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(255,255,255,0.9);
+        font-weight: bold;
+        color: #1a73e8;
+        font-size: 1.2em;
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% {opacity: 0.5;}
+        50% {opacity: 1;}
+        100% {opacity: 0.5;}
+    }
+
+    /* KPIs coloridos */
+    .kpi iframe {
+        border-radius: 12px;
+        padding: 10px;
+    }
+
+    .kpi-wrapper-1 { background: #e8f0fe; }
+    .kpi-wrapper-2 { background: #fff3e0; }
+    .kpi-wrapper-3 { background: #e0f7fa; }
+
+    /* Alturas baseadas no tipo */
+    .kpi { height: 180px; }
+    .chart { height: 300px; }
+    .table { height: 450px; }
+</style>
+</head>
+<body>
+
+<h1>Dashboard Cresol - Interativo</h1>
+<div id="qlik-objects-container"></div>
+
+<script>
+const config = {
+    host: "msryx1okj1jicf6.us.qlikcloud.com",
+    appId: "a9e68ba1-7857-4dd5-ac65-601778c6875c",
+    webIntegrationId: "sg3OPX-nsZk-Q6Omi9THVDtbVdbHnb9C"
+};
+
+// Objetos
+const kpiIds = [
+    "ad2a106c-250c-422d-89d3-40307a3f0692",
+    "4ab17ef0-10fc-4c14-9484-4f153d37fcd8",
+    "3f717c27-46e0-4146-986f-cd3629d2bb2d"
+];
+
+const chartIds = [
+    "756fbf78-4195-46fd-9c35-828607a3e3b4",
+    "6b0b1c06-7b51-44b3-a8dd-a36f3173f5f5",
+    "SZmpBj"
+];
+
+const tableIds = [
+    "ZZyF"
+];
+
+const container = document.getElementById("qlik-objects-container");
+
+// Função de contagem animada
+function animateKPI(iframe) {
+    // Criamos uma mensagem simulando valor que sobe
+    // OBS: valores reais do Qlik precisam de API para capturar; aqui é efeito visual
+    const valueDisplay = document.createElement("div");
+    valueDisplay.style.position = "absolute";
+    valueDisplay.style.top = "50%";
+    valueDisplay.style.left = "50%";
+    valueDisplay.style.transform = "translate(-50%, -50%)";
+    valueDisplay.style.fontSize = "1.6em";
+    valueDisplay.style.fontWeight = "700";
+    valueDisplay.style.color = "#1a73e8";
+    iframe.parentNode.appendChild(valueDisplay);
+
+    let val = 0;
+    const target = Math.floor(Math.random()*10000)+100; // número aleatório para simular
+    const step = Math.ceil(target/50);
+    const interval = setInterval(()=>{
+        val += step;
+        if(val >= target) {
+            val = target;
+            clearInterval(interval);
+            valueDisplay.remove(); // remove contador após carregar iframe
+        }
+        valueDisplay.textContent = val.toLocaleString();
+    }, 20);
+}
+
+function createIframe(objId, type, wrapperClass = "") {
+    const wrapper = document.createElement("div");
+    wrapper.className = "qlik-object-wrapper " + wrapperClass;
+
+    const loader = document.createElement("div");
+    loader.className = "loader";
+    loader.textContent = "Carregando...";
+
+    const iframe = document.createElement("iframe");
+    iframe.className = "qlik-object";
+    iframe.src = `https://${config.host}/single/?appid=${config.appId}&obj=${objId}&theme=horizon&opt=none&web-integration-id=${config.webIntegrationId}`;
+
+    switch(type){
+        case "kpi": iframe.style.height = "180px"; break;
+        case "chart": iframe.style.height = "300px"; break;
+        case "table": iframe.style.height = "450px"; break;
+        default: iframe.style.height = "300px";
+    }
+
+    iframe.onload = () => {
+        loader.style.opacity = 0;
+        setTimeout(()=> loader.remove(), 300);
+        wrapper.classList.add("loaded");
+        if(type==="kpi") animateKPI(iframe);
+    };
+
+    wrapper.appendChild(iframe);
+    wrapper.appendChild(loader);
+    container.appendChild(wrapper);
+}
+
+// KPIs
+kpiIds.forEach((id, index) => createIframe(id, "kpi", "kpi-wrapper-" + (index+1)));
+// Gráficos
+chartIds.forEach(id => createIframe(id, "chart"));
+// Tabelas
+tableIds.forEach(id => createIframe(id, "table"));
+
+</script>
+
+</body>
+</html>
