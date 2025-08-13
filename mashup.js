@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const config = {
         host: "msryx1okj1jicf6.us.qlikcloud.com",
         clientId: "a809f137be42c7c2b91d60ca9fca46fa", // Seu Client ID para OAuth
-        redirectUri: "https://pedro-bonato.github.io/MashupGabi3.0/index.html", // A própria página
+        redirectUri: "https://pedro-bonato.github.io/MashupGabi3.0/auth-callback.html", // A própria página
         accessTokenStorage: "session",
         autoRedirect: true,
     };
