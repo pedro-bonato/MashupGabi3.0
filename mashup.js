@@ -1,37 +1,58 @@
-var prefix = window.location.pathname.substr( 0, window.location.pathname.toLowerCase().lastIndexOf( "/extensions" ) + 1 );
-var config = {
-	host: window.location.hostname,
-	prefix: prefix,
-	port: window.location.port,
-	isSecure: window.location.protocol === "https:"
-};
-require.config( {
-	baseUrl: ( config.isSecure ? "https://" : "http://" ) + config.host + (config.port ? ":" + config.port : "") + config.prefix + "resources"
-} );
+/*
+* Mashup para Planejamento Comercial 2026
+* Conectado ao ambiente Qlik Cloud e renderizando objetos
+* diretamente na estrutura de cards do HTML.
+*/
 
-require( ["js/qlik"], function ( qlik ) {
-	// Você pode adicionar um callback para erros aqui se precisar
-	// qlik.on( "error", function ( error ) {
-	// 	console.error(error);
-	// } );
+document.addEventListener('DOMContentLoaded', function() {
 
-	// Abre o seu aplicativo Qlik
-	var app = qlik.openApp('teste3.qvf', config);
+    // Configurações para conexão com seu ambiente Qlik Cloud
+    const config = {
+        host: "msryx1okj1jicf6.us.qlikcloud.com",
+        port: 443,
+        prefix: "",
+        isSecure: true,
+        webIntegrationId: "sg3OPX-nsZk-Q6Omi9THVDtbVdbHnb9C"
+    };
 
-	// Renderiza os objetos do Qlik nas divs correspondentes
-	// getObject(id_da_div_no_html, id_do_objeto_no_qlik)
-	app.getObject('QV01', 'mEbcM'); 	// index
-	app.getObject('QV02', 'mEbcM'); 	// index
-	app.getObject('QV03', 'mEbcM'); 	// index
-	app.getObject('QV04', 'YXEg'); 		// index
-	app.getObject('QV05', 'YXEg');		// index
-	app.getObject('QV06', 'YXEg'); 		// index
-	app.getObject('QV07', 'kmpTfTm'); 	// pagina 1
-	app.getObject('QV08', 'pPARBrj'); 	// pagina 1
+    // Configura o require.js para encontrar os recursos do Qlik Cloud
+    require.config({
+        baseUrl: `https://${config.host}/resources`,
+        paths: {
+            "qlik": `https://${config.host}/resources/js/qlik`
+        }
+    });
 
+    // Inicia a aplicação
+    require(["qlik"], function (qlik) {
 
-    // Adicione mais objetos aqui se necessário
-	// app.getObject('QV02', 'ID_DO_SEU_SEGUNDO_GRAFICO');
-	// app.getObject('QV03', 'ID_DO_SEU_TERCEIRO_GRAFICO');
+        // Tratamento de erros
+        qlik.on("error", function (error) {
+            console.error("Erro do Qlik:", error);
+        });
 
-} );
+        // Mapeamento dos IDs das divs no HTML para os IDs dos objetos no Qlik
+        const objectMappings = {
+            "QV01": "ddbbffa8-1028-430a-9a49-99b2c0cdc098",
+            "QV02": "ddbbffa8-1028-430a-9a49-99b2c0cdc098",
+            "QV03": "ddbbffa8-1028-430a-9a49-99b2c0cdc098",
+            "QV04": "ddbbffa8-1028-430a-9a49-99b2c0cdc098",
+            "QV05": "ddbbffa8-1028-430a-9a49-99b2c0cdc098",
+            "QV06": "ddbbffa8-1028-430a-9a49-99b2c0cdc098"
+        };
+
+        // ID do seu aplicativo no Qlik Cloud
+        const appId = "e84c7d4c-b8c1-40a6-b3c2-1df068af26fc";
+        
+        // Abre o aplicativo Qlik
+        const app = qlik.openApp(appId, config);
+
+        // Renderiza cada objeto no seu respectivo container
+        for (const divId in objectMappings) {
+            const objectId = objectMappings[divId];
+            if (document.getElementById(divId)) {
+                app.getObject(divId, objectId, { noInteraction: true });
+            }
+        }
+    });
+});
