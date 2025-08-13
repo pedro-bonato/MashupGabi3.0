@@ -1,0 +1,276 @@
+/* ESTILO CORRIGIDO PARA O OBJETO QLIK */
+.qvobject {
+    position: relative;
+    height: 60px; 
+    width: 100%;
+}
+
+
+:root{
+  /* Paleta de Cores Cresol (Laranja) */
+  --cresol-laranja-principal: #F58220; /* Verde #005c46  - Laranja #f58220*/
+  --cresol-laranja-escuro: #F58220; /* Laranja escuro E6830D*/
+  --cresol-cinza: #666666;
+
+  /* Variáveis do Layout */
+  --bg: var(--cresol-laranja-principal);
+  --card-w: 300px;
+  --card-h: 400px; 
+  --gap: 15px;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+*{box-sizing: border-box}
+
+html,body{height:100%;margin:0;font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;} 
+
+body{
+  background: var(--cresol-laranja-principal); 
+  display:flex; 
+  flex-direction: column; 
+  align-items:center; 
+  justify-content:center; 
+  padding:32px;
+}
+
+/* === ESTILO CORRIGIDO PARA O CABEÇALHO E LOGO (DESKTOP) === */
+.page-header {
+  margin-bottom: 20px; /* Espaço entre o logo e o conteúdo abaixo */
+  background: none;
+  border-radius: 0;
+  padding: 10px 0; /* Adicionado um padding vertical para respiro */
+}
+
+.page-header img {
+  display: block; /* Garante que a margem automática funcione */
+  margin: 0 auto; /* Centraliza o logo no desktop, se desejado */
+  height: 80px;   /* Altura ideal para o logo em telas grandes */
+  width: auto;    /* Largura automática para manter a proporção */
+}
+
+
+/* === AJUSTES RESPONSIVOS PARA CELULAR === */
+@media (max-width: 768px) {
+  .page-header {
+    margin-bottom: 15px; /* Reduz o espaço inferior em telas menores */
+    padding: 5px 0;
+  }
+
+  .page-header img {
+    height: 60px; /* Altura menor para o logo em celulares */
+  }
+}
+
+
+.wrap{ width:100%; max-width:1200px; text-align:center; }
+
+.viewport {
+  position: relative;
+  overflow: visible;
+  margin: 0 auto;
+  width: 100%;
+  padding: 20px 0; /* Reduzido o padding vertical */
+}
+
+/* slider e cards */
+.slider{
+  display:flex;
+  gap: var(--gap);
+  align-items:center;
+  transition: transform 300ms cubic-bezier(.22,.99,.38,1);
+  will-change: transform;
+  backface-visibility: hidden;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.card{
+  width: var(--card-w);
+  height: var(--card-h);
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #f0f0f0;
+  flex-shrink: 0;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  display:flex;
+  flex-direction: column;
+  padding: 24px;
+  backface-visibility: hidden;
+  cursor: grab;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: left;
+}
+
+/* estado ativo */
+.card.active,
+.card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+}
+
+/* === ESTILOS PARA O CONTEÚDO DO CARD === */
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.icon-container {
+  background-color: #fff0dd; /* Laranja bem claro */
+  padding: 8px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.icon-container svg {
+  width: 24px;
+  height: 24px;
+  color: var(--bg);
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 18px;
+  color: #333;
+  margin: 0;
+}
+.card-subtitle {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+}
+
+.card-body {
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+}
+
+.metric {
+  margin-bottom: 15px; 
+}
+.metric-label {
+  font-size: 12px;
+  color: #555;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
+.metric-value {
+  font-weight: bold;
+  color: #111;
+  margin: 0;
+}
+.metric-value.large {
+  font-size: 32px;
+}
+.metric-value.medium {
+  font-size: 24px;
+}
+.metric-delta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.metric-delta.positive { color: #28a745; }
+.metric-delta.negative { color: #dc3545; }
+
+.metric-delta svg {
+  width: 16px;
+  height: 16px;
+}
+.delta-label {
+  color: #888;
+  font-weight: normal;
+}
+
+.card-footer {
+  margin-top: auto; 
+}
+
+/* Estilo do botão que será criado pelo JS */
+.card-footer button {
+  width: 100%;
+  background-color: var(--bg); /* Cor laranja principal */
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 14px 24px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+.card-footer button:hover {
+  background-color: var(--cresol-laranja-escuro); /* Laranja mais escuro no hover */
+}
+
+
+/* dots */
+.dots{
+  margin-top: 14px;
+  display:flex;
+  justify-content:center;
+  gap: 10px;
+}
+.dot{
+  width: 10px;
+  height: 10px;
+  border-radius:50%;
+  background: rgba(255,255,255,0.55);
+  cursor: pointer;
+  transition: transform 200ms ease, background 200ms ease;
+}
+.dot.active{
+  background: white;
+  transform: scale(1.05);
+}
+
+/* cursor enquanto arrasta */
+.grabbing { cursor: grabbing !important; }
+
+#popup {
+	background-color: #c3534b;
+	color: #FFFFFF;
+	position: fixed;
+	max-width: 250px;
+	padding: 10px;
+	margin: 10px;
+	bottom: 0;
+	right: 0;
+	display: none;
+	border-radius: 5px;
+	z-index: 6;
+	font-family: sans-serif;
+}
+
+.close {
+	cursor: pointer;
+	background: 0 0;
+	border: 0;
+	float: right;
+	font-size: 21px;
+	font-weight: 700;
+	line-height: 1;
+	color: #000;
+	text-shadow: 0 1px 0 #fff;
+	opacity: .2;
+	position: absolute;
+	right: 9px;
+	top: 7px;
+}
+
+.close:hover {
+	opacity: .5;
+}
+
+#popupText {
+	margin-right: 23px;
+}
