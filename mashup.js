@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         port: 443,
         prefix: "",
         isSecure: true,
-        webIntegrationId: "sg3OPX-nsZk-Q6Omi9THVDtbVdbHnb9C"
+        webIntegrationId: "a809f137be42c7c2b91d60ca9fca46fa"
     };
 
     // Configura o require.js para encontrar os recursos do Qlik Cloud
