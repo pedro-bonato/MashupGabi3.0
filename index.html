@@ -1,30 +1,41 @@
 <!doctype html>
 <html lang="pt-BR">
-  
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Planejamento Comercial 2026</title>
   
-  <link rel="stylesheet" href="index.css"> <script src="https://msryx1okj1jicf6.us.qlikcloud.com/resources/qlik-embed.js"></script>
-  
-  <script src="mashup.js" defer></script>
-  
+  <link rel="stylesheet" href="index.css">
+
+  <script
+    type="module"
+    src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/qlik-embed.js"
+    data-host="https://msryx1okj1jicf6.us.qlikcloud.com"
+    data-client-id="a809f137be42c7c2b91d60ca9fca46fa"
+    data-redirect-uri="https://pedro-bonato.github.io/MashupGabi3.0/index.html"
+    data-auth-type="Oauth2"
+    data-app-id="e84c7d4c-b8c1-40a6-b3c2-1df068af26fc"
+  ></script>
+
+  <style>
+    qlik-chart {
+      display: block; /* Garante que o componente ocupe o espaço corretamente */
+      height: 60px; 
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- CABEÇALHO COM O LOGO -->
   <header class="page-header">
     <img src="cresol-branca.png">
   </header>
 
-  <!-- CONTEÚDO PRINCIPAL -->
   <main class="wrap">
     <div class="viewport">
       <div class="slider" id="slider">
         
-        <!-- Card 1: Depósitos (AJUSTADO) -->
         <div class="card">
           <div class="card-header">
             <div class="icon-container">
@@ -36,23 +47,18 @@
             </div>
           </div>
           <div class="card-body">
-            <!-- Bloco da Métrica "Meta" -->
             <div class="metric">
               <p class="metric-label">Planejamento Comercial</p>
-              <div id="QV01" class="qvobject"></div> 
+              <qlik-chart object-id="ddbbffa8-1028-430a-9a49-99b2c0cdc098"></qlik-chart>
             </div>
-
-            <!-- Bloco da Métrica "Saldo" -->
             <div class="metric">
               <p class="metric-label">Gestão de Recursos</p>
-              <div id="QV04" class="qvobject"></div>
+              <qlik-chart object-id="ddbbffa8-1028-430a-9a49-99b2c0cdc098"></qlik-chart>
             </div>
-			
           </div>
           <div class="card-footer"></div>
         </div>
 
-        <!-- Card 2 -->
         <div class="card">
           <div class="card-header">
             <div class="icon-container">
@@ -64,23 +70,18 @@
             </div>
           </div>
           <div class="card-body">
-            <!-- Bloco da Métrica "Meta" -->
             <div class="metric">
               <p class="metric-label">Planejamento Comercial</p>
-              <!-- O objeto Qlik fica aqui, e o texto estático foi removido -->
-              <div id="QV03" class="qvobject"></div> 
+              <qlik-chart object-id="ddbbffa8-1028-430a-9a49-99b2c0cdc098"></qlik-chart>
             </div>
-            <!-- Bloco da Métrica "Saldo" -->
             <div class="metric">
               <p class="metric-label">Gestão de Inadimplência</p>
-              <div id="QV05" class="qvobject"></div>
+              <qlik-chart object-id="ddbbffa8-1028-430a-9a49-99b2c0cdc098"></qlik-chart>
             </div>
           </div>
-		  
           <div class="card-footer"></div>
         </div>
-		
-		<!-- Card 3 teste-->
+    
         <div class="card">
           <div class="card-header">
             <div class="icon-container">
@@ -92,28 +93,24 @@
             </div>
           </div>
           <div class="card-body">
-            <!-- Bloco da Métrica "Meta" -->
             <div class="metric">
               <p class="metric-label">Planejamento Comercial</p>
-              <div id="QV02" class="qvobject"></div> 
+               <qlik-chart object-id="ddbbffa8-1028-430a-9a49-99b2c0cdc098"></qlik-chart>
             </div>
-            <!-- Bloco da Métrica "Saldo" -->
             <div class="metric">
               <p class="metric-label">Gerenciador de Crédito</p>
-              <div id="QV06" class="qvobject"></div>
+              <qlik-chart object-id="ddbbffa8-1028-430a-9a49-99b2c0cdc098"></qlik-chart>
             </div>
-          <div class="card-footer"></div>
+            <div class="card-footer"></div>
+          </div>
         </div>
 
       </div>
-
     </div>
 
     <div class="dots" id="dots"></div>
-  </div></main>
+  </main>
 
-
-  <script src="carrossel.js"></script>
-
-
-</body></html>
+  <script src="carrossel.js"></script>
+</body>
+</html>
