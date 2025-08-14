@@ -36,7 +36,6 @@ body {
   padding: 32px;
 }
 
-/* === ESTILO CORRIGIDO PARA O CABEÇALHO E LOGO (DESKTOP) === */
 .page-header {
   margin-bottom: 20px;
   background: none;
@@ -80,7 +79,7 @@ body {
 .slider {
   display: flex;
   gap: var(--gap);
-  align-items: stretch; /* <<< MUDANÇA AQUI: Garante que todos os cards tenham a mesma altura */
+  align-items: stretch; 
   transition: transform 300ms cubic-bezier(.22,.99,.38,1);
   will-change: transform;
   backface-visibility: hidden;
@@ -91,8 +90,7 @@ body {
 
 .card {
   width: var(--card-w);
-  /* height: var(--card-h); */ /* <<< MUDANÇA AQUI: Comentamos a altura fixa */
-  min-height: var(--card-h);   /* <<< MUDANÇA AQUI: Usamos altura mínima */
+  min-height: var(--card-h);   
   background: #ffffff;
   border-radius: 16px;
   border: 1px solid #f0f0f0;
@@ -113,7 +111,6 @@ body {
   box-shadow: 0 14px 30px rgba(0,0,0,0.12);
 }
 
-/* === ESTILOS PARA O CONTEÚDO DO CARD === */
 .card-header {
   display: flex;
   align-items: center;
@@ -149,14 +146,14 @@ body {
   flex-grow: 1; 
   display: flex;
   flex-direction: column;
-  gap: 15px; /* <<< MUDANÇA AQUI: Adiciona espaçamento entre os metrics */
+  gap: 15px; 
 }
 
 .metric {
-  /* margin-bottom: 15px; */ /* <<< MUDANÇA AQUI: Removemos a margem, pois usamos 'gap' no pai */
-  flex-grow: 1;             /* <<< MUDANÇA AQUI: Permite que o contêiner cresça */
-  display: flex;            /* <<< MUDANÇA AQUI: Transforma em flex container */
-  flex-direction: column;   /* <<< MUDANÇA AQUI: Organiza o conteúdo (label + qlik-embed) em coluna */
+  display: flex;            
+  width: auto;
+  height: 70px;
+  flex-direction: column;   
 }
 
 .metric-label {
@@ -165,8 +162,6 @@ body {
   font-weight: 500;
   margin: 0 0 4px 0;
 }
-
-/* ... (O resto do seu CSS continua igual até o final) ... */
 
 .card-footer {
   margin-top: auto; 
@@ -213,22 +208,10 @@ body {
 }
 
 
-/* ==================================================================== */
-/* === BLOCO DE AJUSTES PARA OBJETOS QLIK (ADICIONAR/SUBSTITUIR) === */
-/* ==================================================================== */
-
-/* Para a planilha inteira, fazemos ela preencher o espaço flexível */
 qlik-embed {
   display: block;
   width: 50%;
   height: 100%; /* <<< MUDANÇA AQUI: Ocupa 100% da altura do contêiner .metric */
   flex-grow: 1; /* <<< MUDANÇA AQUI: Garante que ele se estique */
   min-height: 400px; /* <<< MUDANÇA AQUI: Altura mínima para não ficar muito pequeno */
-}
-
-/* Para gráficos individuais, definimos uma altura fixa, pois são menores */
-qlik-chart {
-  display: block;
-  width: 100%;
-  height: 250px; /* <<< MUDANÇA AQUI: Altura padrão para um gráfico simples */
 }
