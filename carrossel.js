@@ -147,10 +147,3 @@ document.addEventListener('DOMContentLoaded', function() {
     recalcSizes();
     snapToIndex();
 });
-	//open apps -- inserted here --
-	var app = qlik.openApp('teste3.qvf', config);
-
-
-
-	//get objects -- inserted here --
-	

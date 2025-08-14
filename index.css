@@ -90,7 +90,8 @@ body{
 
 .card{
   width: var(--card-w);
-  height: var(--card-h);
+  /*height: var(--card-h);*/
+  min-height: var(--card-h);
   background: #ffffff;
   border-radius: 16px;
   border: 1px solid #f0f0f0;
