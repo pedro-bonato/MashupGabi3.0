@@ -274,3 +274,18 @@ body{
 #popupText {
 	margin-right: 23px;
 }
+
+
+/* Para a planilha inteira, dê uma altura generosa */
+qlik-embed {
+  display: block;
+  width: 100%;
+  height: 450px; /* Ajuste conforme necessário */
+}
+
+/* Para o gráfico único, uma altura menor basta */
+qlik-chart {
+  display: block;
+  width: 100%;
+  height: 200px; /* Ajuste conforme necessário */
+}
