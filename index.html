@@ -1,116 +1,226 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Planejamento Comercial 2026</title>
-  
-  <link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Teste Pedro</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script
-    type="module"
-    src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/qlik-embed.js"
+    crossorigin="anonymous"
+    type="application/javascript"
+    src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/index.min.js"
     data-host="https://msryx1okj1jicf6.us.qlikcloud.com"
-    data-client-id="a809f137be42c7c2b91d60ca9fca46fa"
-    data-redirect-uri="https://pedro-bonato.github.io/MashupGabi3.0/index.html"
-    data-auth-type="Oauth2"
-    data-app-id="e84c7d4c-b8c1-40a6-b3c2-1df068af26fc"
+    data-client-id="09d86c449ca034586e04fb47e3b5703e"
+    data-redirect-uri="https://pedro-bonato.github.io/MashupGabi3.0/oauth_callback.html"
+    data-access-token-storage="session"
   ></script>
 
   <style>
-    qlik-chart {
-      display: block; /* Garante que o componente ocupe o espaço corretamente */
-      height: 60px; 
+    /* --- Reset e Configurações Globais --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      color: #374151; /* Cinza mais escuro para texto */
+      background-color: #F3F4F6; /* Fundo cinza claro */
+      height: 100%;
       width: 100%;
+    }
+
+    /* --- Estrutura Principal (Layout com CSS Grid) --- */
+    .mashup-container {
+      display: grid;
+      grid-template-columns: 280px 1fr; /* Sidebar fixa, conteúdo flexível */
+      grid-template-rows: 80px 1fr; /* Header fixo, conteúdo flexível */
+      grid-template-areas:
+        "header header"
+        "sidebar main";
+      height: 100vh;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    .header { grid-area: header; }
+    .sidebar { grid-area: sidebar; }
+    .main-content { grid-area: main; }
+
+    /* --- Componentes do Layout --- */
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .sidebar {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #111827;
+      border-bottom: 1px solid #E5E7EB;
+      padding-bottom: 12px;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      overflow-y: auto; /* Permite rolagem se o conteúdo for maior */
+    }
+
+    /* --- Cards e Conteúdo --- */
+    .card {
+      background-color: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .kpi-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+
+    .kpi-card {
+      padding: 16px; /* Padding menor para KPIs */
+      align-items: center;
+      text-align: center;
+    }
+    
+    .kpi-card .kpi-title {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #6B7280;
+    }
+
+    .chart-container {
+      flex-grow: 1; /* Faz o container do gráfico principal crescer */
+      min-height: 500px;
+    }
+
+    /* --- Estilo para o componente Qlik --- */
+    qlik-embed {
+      width: 100%;
+      height: 100%;
+      min-height: 80px; /* Altura mínima para KPIs e filtros */
+    }
+
+    /* --- Responsividade para Telas Menores --- */
+    @media (max-width: 992px) {
+      .mashup-container {
+        grid-template-columns: 1fr; /* Coluna única */
+        grid-template-rows: auto; /* Altura automática */
+        grid-template-areas:
+          "header"
+          "sidebar"
+          "main";
+        height: auto;
+        padding: 16px;
+        gap: 16px;
+      }
+      .main-content {
+        overflow-y: visible;
+      }
     }
   </style>
 </head>
-
 <body>
 
-  <header class="page-header">
-    <img src="cresol-branca.png">
-  </header>
+  <div class="mashup-container">
+    <header class="header">
+      <h1>Dashboard de Análise</h1>
+    </header>
 
-  <main class="wrap">
-    <div class="viewport">
-      <div class="slider" id="slider">
-        
-        <div class="card">
-          <div class="card-header">
-            <div class="icon-container">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414-.336.75-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75m0 0h.01M12 12h.01M15 12h.01M18 12h.01M21 12h.01M3 12h.01M6 12h.01M9 12h.01"></path></svg>
-            </div>
-            <div class="title-group">
-              <h2 class="card-title">Depósitos</h2>
-              <p class="card-subtitle">RDC, LCA, DV e Poupança</p>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="metric">
-              <p class="metric-label">Planejamento Comercial</p>
-              <qlik-chart object-id="ddbbffa8-1028-430a-9a49-99b2c0cdc098"></qlik-chart>
-            </div>
-            <div class="metric">
-              <p class="metric-label">Gestão de Recursos</p>
-              <qlik-chart object-id="ddbbffa8-1028-430a-9a49-99b2c0cdc098"></qlik-chart>
-            </div>
-          </div>
-          <div class="card-footer"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <div class="icon-container">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414-.336.75-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75m0 0h.01M12 12h.01M15 12h.01M18 12h.01M21 12h.01M3 12h.01M6 12h.01M9 12h.01"></path></svg>
-            </div>
-            <div class="title-group">
-              <h2 class="card-title">Inad 15</h2>
-              <p class="card-subtitle">Inadimplência &gt;= 15 dias</p>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="metric">
-              <p class="metric-label">Planejamento Comercial</p>
-              <qlik-chart object-id="ddbbffa8-1028-430a-9a49-99b2c0cdc098"></qlik-chart>
-            </div>
-            <div class="metric">
-              <p class="metric-label">Gestão de Inadimplência</p>
-              <qlik-chart object-id="ddbbffa8-1028-430a-9a49-99b2c0cdc098"></qlik-chart>
-            </div>
-          </div>
-          <div class="card-footer"></div>
-        </div>
-    
-        <div class="card">
-          <div class="card-header">
-            <div class="icon-container">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414-.336.75-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75m0 0h.01M12 12h.01M15 12h.01M18 12h.01M21 12h.01M3 12h.01M6 12h.01M9 12h.01"></path></svg>
-            </div>
-            <div class="title-group">
-              <h2 class="card-title">Carteira Ativa</h2>
-              <p class="card-subtitle">Recursos Próprios</p>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="metric">
-              <p class="metric-label">Planejamento Comercial</p>
-               <qlik-chart object-id="ddbbffa8-1028-430a-9a49-99b2c0cdc098"></qlik-chart>
-            </div>
-            <div class="metric">
-              <p class="metric-label">Gerenciador de Crédito</p>
-              <qlik-chart object-id="ddbbffa8-1028-430a-9a49-99b2c0cdc098"></qlik-chart>
-            </div>
-            <div class="card-footer"></div>
-          </div>
-        </div>
-
+    <aside class="sidebar">
+      <h2>Filtros</h2>
+      <div class="card filter-item">
+          <qlik-embed
+            ui="analytics/chart"
+            app-id="a9e68ba1-7857-4dd5-ac65-601778c6875c"
+            object-id="SEU-ID-DE-FILTRO-1"
+            no-actions="true"
+          ></qlik-embed>
       </div>
-    </div>
+      <div class="card filter-item">
+          <qlik-embed
+            ui="analytics/chart"
+            app-id="a9e68ba1-7857-4dd5-ac65-601778c6875c"
+            object-id="SEU-ID-DE-FILTRO-2"
+            no-actions="true"
+          ></qlik-embed>
+      </div>
+    </aside>
 
-    <div class="dots" id="dots"></div>
-  </main>
+    <main class="main-content">
+      <div class="kpi-container">
+        <div class="card kpi-card">
+          <div class="kpi-title">Receita Total</div>
+          <qlik-embed ui="analytics/chart" app-id="a9e68ba1-7857-4dd5-ac65-601778c6875c" object-id="SEU-ID-DE-KPI-1" no-actions="true"></qlik-embed>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-title">Lucro</div>
+          <qlik-embed ui="analytics/chart" app-id="a9e68ba1-7857-4dd5-ac65-601778c6875c" object-id="SEU-ID-DE-KPI-2" no-actions="true"></qlik-embed>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-title">Clientes Únicos</div>
+          <qlik-embed ui="analytics/chart" app-id="a9e68ba1-7857-4dd5-ac65-601778c6875c" object-id="SEU-ID-DE-KPI-3" no-actions="true"></qlik-embed>
+        </div>
+      </div>
 
-  <script src="carrossel.js"></script>
+      <div class="card chart-container">
+        <qlik-embed
+          ui="analytics/chart"
+          app-id="a9e68ba1-7857-4dd5-ac65-601778c6875c"
+          object-id="ad2a106c-250c-422d-89d3-40307a3f0692"
+          no-selections="true"
+          no-actions="true"
+        ></qlik-embed>
+      </div>
+      
+      <div class="card chart-container">
+        <qlik-embed
+          ui="classic/app"
+          app-id="a9e68ba1-7857-4dd5-ac65-601778c6875c"
+          sheet-id="SZmpBj"
+          show-selections-bar="false"
+          show-title="false"
+          show-toolbar="false"
+        ></qlik-embed>
+      </div>
+
+    </main>
+  </div>
+
 </body>
 </html>
