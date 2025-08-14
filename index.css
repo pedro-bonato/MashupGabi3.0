@@ -220,10 +220,10 @@ body {
 /* Para a planilha inteira, fazemos ela preencher o espaço flexível */
 qlik-embed {
   display: block;
-  width: 100%;
+  width: 50%;
   height: 100%; /* <<< MUDANÇA AQUI: Ocupa 100% da altura do contêiner .metric */
   flex-grow: 1; /* <<< MUDANÇA AQUI: Garante que ele se estique */
-  min-height: 600px; /* <<< MUDANÇA AQUI: Altura mínima para não ficar muito pequeno */
+  min-height: 400px; /* <<< MUDANÇA AQUI: Altura mínima para não ficar muito pequeno */
 }
 
 /* Para gráficos individuais, definimos uma altura fixa, pois são menores */
