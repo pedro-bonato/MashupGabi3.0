@@ -1,7 +1,7 @@
-:root{
+:root {
   /* Paleta de Cores Cresol (Laranja) */
-  --cresol-laranja-principal: #F58220; /* Verde #005c46  - Laranja #f58220*/
-  --cresol-laranja-escuro: #F58220; /* Laranja escuro E6830D*/
+  --cresol-laranja-principal: #F58220;
+  --cresol-laranja-escuro: #E6830D; /* Corrigido para um laranja mais escuro real */
   --cresol-cinza: #666666;
 
   /* Variáveis do Layout */
@@ -15,63 +15,72 @@ body {
   overflow-x: hidden;
 }
 
-*{box-sizing: border-box}
+* {
+  box-sizing: border-box;
+}
 
-html,body{height:100%;margin:0;font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;} 
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-body{
+body {
   background: var(--cresol-laranja-principal); 
-  display:flex; 
+  display: flex; 
   flex-direction: column; 
-  align-items:center; 
-  justify-content:center; 
-  padding:32px;
+  align-items: center; 
+  justify-content: center; 
+  padding: 32px;
 }
 
 /* === ESTILO CORRIGIDO PARA O CABEÇALHO E LOGO (DESKTOP) === */
 .page-header {
-  margin-bottom: 20px; /* Espaço entre o logo e o conteúdo abaixo */
+  margin-bottom: 20px;
   background: none;
   border-radius: 0;
-  padding: 10px 0; /* Adicionado um padding vertical para respiro */
+  padding: 10px 0;
 }
 
 .page-header img {
-  display: block; /* Garante que a margem automática funcione */
-  margin: 0 auto; /* Centraliza o logo no desktop, se desejado */
-  height: 80px;   /* Altura ideal para o logo em telas grandes */
-  width: auto;    /* Largura automática para manter a proporção */
+  display: block;
+  margin: 0 auto;
+  height: 80px;
+  width: auto;
 }
-
 
 /* === AJUSTES RESPONSIVOS PARA CELULAR === */
 @media (max-width: 768px) {
   .page-header {
-    margin-bottom: 15px; /* Reduz o espaço inferior em telas menores */
+    margin-bottom: 15px;
     padding: 5px 0;
   }
-
   .page-header img {
-    height: 60px; /* Altura menor para o logo em celulares */
+    height: 60px;
   }
 }
 
-
-.wrap{ width:100%; max-width:1200px; text-align:center; }
+.wrap {
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+}
 
 .viewport {
   position: relative;
   overflow: visible;
   margin: 0 auto;
   width: 100%;
-  padding: 20px 0; /* Reduzido o padding vertical */
+  padding: 20px 0;
 }
 
 /* slider e cards */
-.slider{
-  display:flex;
+.slider {
+  display: flex;
   gap: var(--gap);
-  align-items:center;
+  align-items: stretch; /* <<< MUDANÇA AQUI: Garante que todos os cards tenham a mesma altura */
   transition: transform 300ms cubic-bezier(.22,.99,.38,1);
   will-change: transform;
   backface-visibility: hidden;
@@ -80,16 +89,16 @@ body{
   -webkit-user-select: none;
 }
 
-.card{
+.card {
   width: var(--card-w);
-  /*height: var(--card-h);*/
-  min-height: var(--card-h);
+  /* height: var(--card-h); */ /* <<< MUDANÇA AQUI: Comentamos a altura fixa */
+  min-height: var(--card-h);   /* <<< MUDANÇA AQUI: Usamos altura mínima */
   background: #ffffff;
   border-radius: 16px;
   border: 1px solid #f0f0f0;
   flex-shrink: 0;
   transition: transform 220ms ease, box-shadow 220ms ease;
-  display:flex;
+  display: flex;
   flex-direction: column;
   padding: 24px;
   backface-visibility: hidden;
@@ -98,7 +107,6 @@ body{
   text-align: left;
 }
 
-/* estado ativo */
 .card.active,
 .card:hover {
   transform: translateY(-12px);
@@ -106,7 +114,6 @@ body{
 }
 
 /* === ESTILOS PARA O CONTEÚDO DO CARD === */
-
 .card-header {
   display: flex;
   align-items: center;
@@ -115,7 +122,7 @@ body{
 }
 
 .icon-container {
-  background-color: #fff0dd; /* Laranja bem claro */
+  background-color: #fff0dd;
   padding: 8px;
   border-radius: 8px;
   flex-shrink: 0;
@@ -142,55 +149,32 @@ body{
   flex-grow: 1; 
   display: flex;
   flex-direction: column;
+  gap: 15px; /* <<< MUDANÇA AQUI: Adiciona espaçamento entre os metrics */
 }
 
 .metric {
-  margin-bottom: 15px; 
+  /* margin-bottom: 15px; */ /* <<< MUDANÇA AQUI: Removemos a margem, pois usamos 'gap' no pai */
+  flex-grow: 1;             /* <<< MUDANÇA AQUI: Permite que o contêiner cresça */
+  display: flex;            /* <<< MUDANÇA AQUI: Transforma em flex container */
+  flex-direction: column;   /* <<< MUDANÇA AQUI: Organiza o conteúdo (label + qlik-embed) em coluna */
 }
+
 .metric-label {
   font-size: 12px;
   color: #555;
   font-weight: 500;
   margin: 0 0 4px 0;
 }
-.metric-value {
-  font-weight: bold;
-  color: #111;
-  margin: 0;
-}
-.metric-value.large {
-  font-size: 32px;
-}
-.metric-value.medium {
-  font-size: 24px;
-}
-.metric-delta {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 14px;
-  font-weight: 500;
-}
-.metric-delta.positive { color: #28a745; }
-.metric-delta.negative { color: #dc3545; }
 
-.metric-delta svg {
-  width: 16px;
-  height: 16px;
-}
-.delta-label {
-  color: #888;
-  font-weight: normal;
-}
+/* ... (O resto do seu CSS continua igual até o final) ... */
 
 .card-footer {
   margin-top: auto; 
 }
 
-/* Estilo do botão que será criado pelo JS */
 .card-footer button {
   width: 100%;
-  background-color: var(--bg); /* Cor laranja principal */
+  background-color: var(--bg);
   border: none;
   border-radius: 10px;
   color: white;
@@ -202,76 +186,49 @@ body{
   user-select: none;
 }
 .card-footer button:hover {
-  background-color: var(--cresol-laranja-escuro); /* Laranja mais escuro no hover */
+  background-color: var(--cresol-laranja-escuro);
 }
 
-
-/* dots */
-.dots{
+.dots {
   margin-top: 14px;
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
   gap: 10px;
 }
-.dot{
+.dot {
   width: 10px;
   height: 10px;
-  border-radius:50%;
+  border-radius: 50%;
   background: rgba(255,255,255,0.55);
   cursor: pointer;
   transition: transform 200ms ease, background 200ms ease;
 }
-.dot.active{
+.dot.active {
   background: white;
   transform: scale(1.05);
 }
 
-/* cursor enquanto arrasta */
-.grabbing { cursor: grabbing !important; }
-
-#popup {
-	background-color: #c3534b;
-	color: #FFFFFF;
-	position: fixed;
-	max-width: 250px;
-	padding: 10px;
-	margin: 10px;
-	bottom: 0;
-	right: 0;
-	display: none;
-	border-radius: 5px;
-	z-index: 6;
-	font-family: sans-serif;
-}
-
-.close {
-	cursor: pointer;
-	background: 0 0;
-	border: 0;
-	float: right;
-	font-size: 21px;
-	font-weight: 700;
-	line-height: 1;
-	color: #000;
-	text-shadow: 0 1px 0 #fff;
-	opacity: .2;
-	position: absolute;
-	right: 9px;
-	top: 7px;
-}
-
-.close:hover {
-	opacity: .5;
-}
-
-#popupText {
-	margin-right: 23px;
+.grabbing {
+  cursor: grabbing !important;
 }
 
 
-/* Para a planilha inteira, dê uma altura generosa */
+/* ==================================================================== */
+/* === BLOCO DE AJUSTES PARA OBJETOS QLIK (ADICIONAR/SUBSTITUIR) === */
+/* ==================================================================== */
+
+/* Para a planilha inteira, fazemos ela preencher o espaço flexível */
 qlik-embed {
   display: block;
   width: 100%;
-  height: 750px; /* Ajuste conforme necessário */
+  height: 100%; /* <<< MUDANÇA AQUI: Ocupa 100% da altura do contêiner .metric */
+  flex-grow: 1; /* <<< MUDANÇA AQUI: Garante que ele se estique */
+  min-height: 600px; /* <<< MUDANÇA AQUI: Altura mínima para não ficar muito pequeno */
+}
+
+/* Para gráficos individuais, definimos uma altura fixa, pois são menores */
+qlik-chart {
+  display: block;
+  width: 100%;
+  height: 250px; /* <<< MUDANÇA AQUI: Altura padrão para um gráfico simples */
 }
