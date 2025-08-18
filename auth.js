@@ -10,30 +10,48 @@ window.showCustomLoginPrompt = function(authorize) {
   qlikAuthRedirect = authorize;
 };
 
-function showMainContent() {
+/**
+ * Função única para realizar a transição da UI do estado de login para o de dashboard.
+ * Esconde a tela de login e mostra os contêineres principais.
+ */
+function switchToDashboardView() {
+  const loginScreen = document.getElementById('login-screen');
   const pageHeader = document.querySelector('.page-header');
   const mainWrap = document.querySelector('.wrap');
-  
-  if (pageHeader) pageHeader.style.display = 'flex';
-  if (mainWrap) mainWrap.style.display = 'block';
 
-  if (typeof window.initCarousel === 'function') {
-    console.log("UI principal visível. Inicializando o carrossel...");
-    window.initCarousel();
+  if (loginScreen) {
+    loginScreen.style.display = 'none';
+  }
+  if (pageHeader) {
+    pageHeader.style.display = 'flex';
+  }
+  if (mainWrap) {
+    mainWrap.style.display = 'block';
   }
 }
 
+/**
+ * Procura de forma robusta pelo token de acesso do Qlik no sessionStorage.
+ * Em vez de construir a chave manualmente, ele varre o storage em busca do padrão correto.
+ * @returns {string|null} O token de acesso, se encontrado; caso contrário, null.
+ */
+function findQlikAccessToken() {
+  for (let i = 0; i < sessionStorage.length; i++) {
+    const key = sessionStorage.key(i);
+    // A chave do token sempre começa com este prefixo
+    if (key && key.startsWith('qlik-sdk-access-token-')) {
+      console.log('Token de acesso do Qlik encontrado com a chave:', key);
+      return sessionStorage.getItem(key);
+    }
+  }
+  return null;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  const loginScreen = document.getElementById('login-screen');
   const loginButton = document.getElementById('login-button');
   const firstQlikEmbed = document.querySelector('qlik-embed');
 
-  const host = "https://msryx1okj1jicf6.us.qlikcloud.com";
-  const clientId = "09d86c449ca034586e04fb47e3b5703e";
-  const tokenKey = `qlik-sdk-access-token-${host}-${clientId}`;
-  const accessToken = sessionStorage.getItem(tokenKey);
-
-  // Configura o event listener para o botão de login.
+  // Configura o listener do botão de login.
   if (loginButton) {
     loginButton.addEventListener('click', () => {
       console.log("Botão de login personalizado foi clicado.");
@@ -46,22 +64,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- INÍCIO DA CORREÇÃO LÓGICA ---
+  // --- LÓGICA PRINCIPAL DE AUTENTICAÇÃO ---
+  const accessToken = findQlikAccessToken();
+
   if (accessToken) {
     // CENÁRIO 1: Usuário JÁ ESTÁ AUTENTICADO
-    console.log("Token de acesso encontrado. Ocultando a tela de login.");
-    if (loginScreen) {
-      loginScreen.style.display = 'none';
-    }
+    console.log("Token de acesso encontrado. Trocando para a visão do dashboard.");
+    
+    // Realiza a troca da UI imediatamente para evitar a tela em branco ou o "piscar" da tela de login.
+    switchToDashboardView();
 
-    // Apenas neste cenário ativamos o MutationObserver para esperar a renderização.
+    // O MutationObserver agora só precisa se preocupar em inicializar o carrossel.
     if (firstQlikEmbed) {
       const observer = new MutationObserver((mutationsList, obs) => {
         for (const mutation of mutationsList) {
           if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-            console.log("Renderização de conteúdo Qlik detectada. Exibindo o dashboard.");
-            showMainContent();
-            obs.disconnect();
+            console.log("Renderização de conteúdo Qlik detectada. Inicializando o carrossel.");
+            if (typeof window.initCarousel === 'function') {
+              window.initCarousel();
+            }
+            obs.disconnect(); // Desconecta após o sucesso.
             return;
           }
         }
@@ -70,10 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   } else {
     // CENÁRIO 2: Usuário PRECISA FAZER LOGIN
-    // A tela de login já está visível por padrão via CSS.
-    // Não fazemos nada e apenas esperamos o clique no botão.
-    // O MutationObserver NÃO é ativado.
+    // Não fazemos nada, a tela de login já está visível por padrão via CSS.
     console.log("Nenhum token de acesso encontrado. Aguardando interação do usuário.");
   }
-  // --- FIM DA CORREÇÃO LÓGICA ---
 });
