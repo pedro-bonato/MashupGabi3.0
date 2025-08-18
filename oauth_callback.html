@@ -7,15 +7,6 @@
       type="application/javascript"
       data-host="https://msryx1okj1jicf6.us.qlikcloud.com/"
       src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/oauth-callback.min.js"
-      onload="redirectAfterAuth()"
     ></script>
-    <script>
-      function redirectAfterAuth() {
-        // espera um pouco para o script processar o token
-        setTimeout(() => {
-          window.location.href = "/pagina1.html"; // redireciona
-        }, 1000);
-      }
-    </script>
   </head>
 </html>
