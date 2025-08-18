@@ -225,5 +225,33 @@
   </main>
 
   <script src="carrossel.js"></script>
+
+  <script src="carrossel.js"></script>
+
+  <script>
+    window.onload = async () => {
+      // Espera o objeto 'qlik' estar disponível no window
+      if (window.qlik) {
+        try {
+          // Verifica se o usuário já está autenticado
+          const isAuthenticated = await window.qlik.isAuthenticated();
+          
+          // Se não estiver autenticado, inicia o fluxo de login
+          if (!isAuthenticated) {
+            console.log("Usuário não autenticado. Redirecionando para login...");
+            window.qlik.login();
+          } else {
+            console.log("Usuário já autenticado.");
+          }
+        } catch (error) {
+          console.error("Erro ao verificar autenticação:", error);
+        }
+      } else {
+        console.error("Biblioteca Qlik Embed não foi carregada.");
+      }
+    };
+  </script>
+  </body>
+</html>
 </body>
 </html>
