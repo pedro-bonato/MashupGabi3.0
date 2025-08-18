@@ -1,4 +1,4 @@
-// Arquivo auth.js (Versão Final Corrigida)
+// Arquivo auth.js (Versão Final com a Correção para a Condição de Corrida)
 
 // ========================================================================
 // FUNÇÃO QUE A QLIK CHAMA QUANDO PRECISA DE LOGIN
@@ -49,5 +49,5 @@ window.addEventListener('load', () => {
     } else {
       console.error("A biblioteca Qlik não foi carregada. Verifique a CSP e a conexão.");
     }
-  }, 2000); 
+  }, 2000); // Atraso de 200ms
 });
