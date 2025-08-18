@@ -19,3 +19,16 @@
         }, { once: true });
       });
     }
+
+window.addEventListener("DOMContentLoaded", () => {
+    const authButton = document.getElementById('auth-button');
+
+    // Qlik grava tokens no localStorage, chave: "qlik-oauth-tokens:<tenant>"
+    const hasToken = Object.keys(localStorage).some(k =>
+      k.startsWith("qlik-oauth-tokens")
+    );
+
+    if (hasToken && authButton) {
+      authButton.style.display = "none";
+    }
+  });
