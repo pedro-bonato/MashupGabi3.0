@@ -1,3 +1,13 @@
+  <script
+    crossorigin="anonymous"
+    type="application/javascript"
+    src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/index.min.js"
+    data-host="https://msryx1okj1jicf6.us.qlikcloud.com"
+    data-client-id="09d86c449ca034586e04fb47e3b5703e"
+    data-redirect-uri="https://pedro-bonato.github.io/MashupGabi3.0/oauth_callback.html"
+    data-access-token-storage="session"
+  ></script>
+
 window.addEventListener('load', async () => {
   // Pega referência dos elementos
   const loginScreen = document.getElementById('login-screen');
