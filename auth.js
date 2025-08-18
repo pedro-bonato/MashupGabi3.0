@@ -12,16 +12,6 @@
           authButton.textContent = 'Redirecionando para autorização...';
           authButton.disabled = true;
           
-          const authContainer = document.getElementById('auth-container');
-          const mainContent = document.getElementById('main-content');
-
-          if (authContainer && mainContent) {
-            // Esconde o container do botão
-            authContainer.style.display = 'none';
-            // Mostra o container do conteúdo principal
-            mainContent.style.display = 'block';
-          }
-          
           // Chama a função resolve() para sinalizar à biblioteca do Qlik
           // que a confirmação do usuário foi dada e o redirecionamento pode prosseguir.
           resolve();
