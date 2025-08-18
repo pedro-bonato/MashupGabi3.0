@@ -215,3 +215,22 @@ qlik-embed {
   flex-grow: 1; /* <<< MUDANÇA AQUI: Garante que ele se estique */
   min-height: 400px; /* <<< MUDANÇA AQUI: Altura mínima para não ficar muito pequeno */
 }
+
+#auth-button {
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #009845; /* Cor verde Cresol */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#auth-button:hover {
+  background-color: #007a37;
+}
+#auth-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
