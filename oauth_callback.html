@@ -1,13 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <script
-      crossorigin="anonymous"
-      type="application/javascript"
-      data-host="https://msryx1okj1jicf6.us.qlikcloud.com/"
-      src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/oauth-callback.min.js"
-    ></script>
-  </head>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Finalizando Login...</title>
 
+  <script
+    crossorigin="anonymous"
+    type="application/javascript"
+    src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/oauth-callback.min.js"
+  ></script>
+</head>
+<body>
+  <p>Autenticação bem-sucedida. Redirecionando para a aplicação...</p>
+
+  <script>
+    // Damos um pequeno tempo para o script da Qlik acima garantir que salvou o token
+    // e então redirecionamos o usuário de volta para a página principal.
+    setTimeout(() => {
+      // Esta linha constrói a URL da página inicial e redireciona.
+      // Ex: https://pedro-bonato.github.io/MashupGabi3.0/
+      const baseUrl = window.location.href.replace('oauth_callback.html', '');
+      window.location.href = baseUrl;
+    }, 500); // 500ms de espera
+  </script>
+</body>
 </html>
