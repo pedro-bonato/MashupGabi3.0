@@ -9,13 +9,4 @@
     src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/oauth-callback.min.js"
   ></script>
 </head>
-<body>
-  <p>Autenticação bem-sucedida. Redirecionando...</p>
-  <script>
-    setTimeout(() => {
-      const baseUrl = window.location.href.replace('oauth_callback.html', '');
-      window.location.href = baseUrl;
-    }, 500);
-  </script>
-</body>
 </html>
