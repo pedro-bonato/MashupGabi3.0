@@ -11,6 +11,70 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
 
+  <style>
+    /* Esconde o conteúdo principal por padrão */
+    .page-header, .wrap {
+      display: none;
+    }
+
+    /* Estilização da Tela de Login (Overlay) */
+    #login-screen {
+      position: fixed; /* Fica por cima de tudo */
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #f7941e; /* Cor laranja Cresol - ajuste se necessário */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .login-box {
+      background-color: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+    }
+
+    .login-logo {
+      /* Adapte o estilo para o logo dentro da caixa branca, se precisar de um logo escuro */
+      filter: invert(1); /* Exemplo para inverter a cor do logo branco */
+      width: 150px;
+      margin-bottom: 20px;
+    }
+
+    .login-box h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .login-box p {
+      margin-bottom: 25px;
+      color: #666;
+    }
+
+    #login-button {
+      background-color: #008542; /* Verde Cresol */
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #login-button:hover {
+      background-color: #006a35;
+    }
+  </style>
+
   <script
     crossorigin="anonymous"
     type="application/javascript"
@@ -24,6 +88,14 @@
 </head>
 <body>
 
+  <div id="login-screen">
+    <div class="login-box">
+      <img src="cresol-branca.png" alt="Cresol Logo" class="login-logo">
+      <h2>Acesso ao Painel</h2>
+      <p>Por favor, autentique-se para visualizar os dados.</p>
+      <button id="login-button">Entrar com Qlik</button>
+    </div>
+  </div>
   <header class="page-header">
     <img src="cresol-branca.png">
   </header>
@@ -224,6 +296,7 @@
   </main>
 
   <script src="carrossel.js"></script>
-  
+  <script src="auth.js"></script>
+
 </body>
 </html>
