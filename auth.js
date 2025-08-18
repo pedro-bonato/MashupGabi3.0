@@ -1,51 +1,54 @@
-  <script
-    crossorigin="anonymous"
-    type="application/javascript"
-    src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/index.min.js"
-    data-host="https://msryx1okj1jicf6.us.qlikcloud.com"
-    data-client-id="09d86c449ca034586e04fb47e3b5703e"
-    data-redirect-uri="https://pedro-bonato.github.io/MashupGabi3.0/oauth_callback.html"
-    data-access-token-storage="session"
-  ></script>
+// ========================================================================
+// PARTE 1: A FUNÇÃO QUE A QLIK VAI CHAMAR AUTOMATICAMENTE
+// O nome "showCustomLoginPrompt" deve ser o mesmo que você colocou no
+// atributo data-auth-redirect-user-confirmation.
+// ========================================================================
+function showCustomLoginPrompt(authorize) {
+  console.log("Qlik pediu confirmação do usuário. Mostrando tela de login personalizada.");
 
-window.addEventListener('load', async () => {
-  // Pega referência dos elementos
+  // Pega os elementos da nossa tela de login
   const loginScreen = document.getElementById('login-screen');
   const loginButton = document.getElementById('login-button');
+
+  // Garante que a tela de login esteja visível
+  loginScreen.style.display = 'flex';
+
+  // Define o que acontece quando NOSSO botão é clicado
+  loginButton.onclick = () => {
+    console.log("Botão de login personalizado foi clicado. Autorizando o redirecionamento...");
+    // Esconde a tela para o usuário ver que algo aconteceu
+    loginScreen.style.display = 'none';
+    
+    // Chama a função 'authorize()' que a Qlik nos deu.
+    // ESTA É A LINHA QUE INICIA O REDIRECIONAMENTO PARA O LOGIN DA QLIK.
+    authorize();
+  };
+}
+
+// ========================================================================
+// PARTE 2: LÓGICA PARA QUANDO A PÁGINA CARREGA
+// Ainda precisamos disso para o caso de o usuário já ter uma sessão válida
+// e não precisar ver a tela de login.
+// ========================================================================
+window.addEventListener('load', async () => {
+  const loginScreen = document.getElementById('login-screen');
   const mainContent = document.querySelector('.wrap');
   const header = document.querySelector('.page-header');
 
-  // Garante que o botão de login existe antes de adicionar o evento
-  if (loginButton) {
-    loginButton.addEventListener('click', () => {
-      if (window.qlik) {
-        window.qlik.login();
-      }
-    });
-  }
-
-  // Verifica se a biblioteca Qlik está pronta
   if (window.qlik) {
-    try {
-      const isAuthenticated = await window.qlik.isAuthenticated();
-      
-      if (isAuthenticated) {
-        // Se JÁ ESTÁ AUTENTICADO: esconde a tela de login e mostra o conteúdo
-        console.log("Usuário já autenticado. Exibindo conteúdo.");
-        loginScreen.style.display = 'none';
-        header.style.display = 'block'; // ou 'flex'
-        mainContent.style.display = 'block'; // ou 'flex'
-      } else {
-        // Se NÃO ESTÁ AUTENTICADO: garante que a tela de login esteja visível
-        console.log("Usuário não autenticado. Exibindo tela de login.");
-        loginScreen.style.display = 'flex';
-      }
-    } catch (error) {
-      console.error("Erro ao verificar autenticação:", error);
-      // Poderíamos mostrar uma mensagem de erro na tela de login aqui
+    const isAuthenticated = await window.qlik.isAuthenticated();
+    if (isAuthenticated) {
+      // Se o usuário já está logado, esconde a tela de login
+      // e mostra o conteúdo principal imediatamente.
+      console.log("Usuário já autenticado na entrada. Exibindo conteúdo.");
+      loginScreen.style.display = 'none';
+      header.style.display = 'block';
+      mainContent.style.display = 'block';
+    } else {
+      // Se não está autenticado, não fazemos nada.
+      // A própria biblioteca da Qlik irá chamar a função 'showCustomLoginPrompt'
+      // quando tentar renderizar um gráfico.
+      console.log("Usuário não autenticado. Aguardando a Qlik chamar o prompt.");
     }
-  } else {
-    console.error("Biblioteca Qlik Embed não foi carregada.");
-    // Poderíamos mostrar uma mensagem de erro na tela de login aqui
   }
 });
