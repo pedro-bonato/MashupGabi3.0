@@ -18,3 +18,25 @@
         }, { once: true });
       });
     }
+
+        // Função para mostrar o conteúdo principal e esconder o botão
+    function showMainContent() {
+      const authContainer = document.getElementById('auth-container');
+      const mainContent = document.getElementById('main-content');
+
+      if (authContainer && mainContent) {
+        // Esconde o container do botão
+        authContainer.style.display = 'none';
+        // Mostra o container do conteúdo principal
+        mainContent.style.display = 'block';
+      }
+      
+      // Importante: Remove o "ouvinte" do evento para que esta função não seja chamada novamente
+      // para cada objeto Qlik que renderizar na página.
+      document.removeEventListener('qlik-embed:render', showMainContent);
+    }
+
+    // Adiciona um "ouvinte" que espera pelo evento 'qlik-embed:render'.
+    // Este evento é disparado pela biblioteca do Qlik assim que um objeto 
+    // é renderizado com sucesso (o que só acontece após a autorização).
+    document.addEventListener('qlik-embed:render', showMainContent);
