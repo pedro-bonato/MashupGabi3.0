@@ -11,23 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
 
-  <style>
-    /* Esconde o conteúdo principal por padrão */
-    .wrap {
-      display: none;
-    }
-    /* Estilo para o indicador de carregamento */
-    #loading-indicator {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: 'Inter', sans-serif;
-      font-size: 1.2rem;
-      color: #333;
-    }
-  </style>
-
   <script
     crossorigin="anonymous"
     type="application/javascript"
@@ -241,42 +224,6 @@
     <div class="dots" id="dots"></div>
   </main>
 
-    <script src="carrossel.js"></script>
-
-    <script>
-      window.onload = async () => {
-        // Pega a referência dos elementos na página
-        const loadingIndicator = document.getElementById('loading-indicator');
-        const mainContent = document.querySelector('.wrap');
-
-        if (window.qlik) {
-          try {
-            const isAuthenticated = await window.qlik.isAuthenticated();
-            
-            if (isAuthenticated) {
-              // Se JÁ ESTÁ AUTENTICADO:
-              console.log("Usuário já autenticado. Exibindo conteúdo.");
-              // 1. Esconde o indicador de carregamento
-              loadingIndicator.style.display = 'none';
-              // 2. Mostra o conteúdo principal (mude para 'flex' ou 'block' conforme seu CSS)
-              mainContent.style.display = 'block'; 
-            } else {
-              // Se NÃO ESTÁ AUTENTICADO:
-              console.log("Usuário não autenticado. Redirecionando para login...");
-              // 1. O indicador de carregamento continua visível
-              // 2. Redireciona para a página de login do Qlik
-              window.qlik.login();
-            }
-          } catch (error) {
-            console.error("Erro ao verificar autenticação:", error);
-            loadingIndicator.textContent = 'Ocorreu um erro ao tentar autenticar.';
-          }
-        } else {
-          console.error("Biblioteca Qlik Embed não foi carregada.");
-          loadingIndicator.textContent = 'Erro ao carregar os componentes.';
-        }
-      };
-    </script>
-
-  </body>
+  <script src="carrossel.js"></script>
+</body>
 </html>
