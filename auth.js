@@ -1,54 +1,47 @@
+// Arquivo auth.js (Versão Final)
+
 // ========================================================================
-// PARTE 1: A FUNÇÃO QUE A QLIK VAI CHAMAR AUTOMATICAMENTE
-// O nome "showCustomLoginPrompt" deve ser o mesmo que você colocou no
-// atributo data-auth-redirect-user-confirmation.
+// FUNÇÃO QUE A QLIK CHAMA QUANDO PRECISA DE LOGIN
 // ========================================================================
 function showCustomLoginPrompt(authorize) {
-  console.log("Qlik pediu confirmação do usuário. Mostrando tela de login personalizada.");
+  console.log("Qlik pediu confirmação. Mostrando tela de login personalizada.");
 
-  // Pega os elementos da nossa tela de login
   const loginScreen = document.getElementById('login-screen');
   const loginButton = document.getElementById('login-button');
 
-  // Garante que a tela de login esteja visível
+  // Mostra nossa tela de login
   loginScreen.style.display = 'flex';
 
-  // Define o que acontece quando NOSSO botão é clicado
+  // Define o que acontece quando o nosso botão é clicado
   loginButton.onclick = () => {
-    console.log("Botão de login personalizado foi clicado. Autorizando o redirecionamento...");
-    // Esconde a tela para o usuário ver que algo aconteceu
-    loginScreen.style.display = 'none';
+    console.log("Botão de login personalizado foi clicado. Autorizando...");
+    loginScreen.style.display = 'none'; // Feedback visual para o usuário
     
-    // Chama a função 'authorize()' que a Qlik nos deu.
-    // ESTA É A LINHA QUE INICIA O REDIRECIONAMENTO PARA O LOGIN DA QLIK.
+    // Chama a função 'authorize()' que a Qlik nos deu para iniciar o login
     authorize();
   };
 }
 
 // ========================================================================
-// PARTE 2: LÓGICA PARA QUANDO A PÁGINA CARREGA
-// Ainda precisamos disso para o caso de o usuário já ter uma sessão válida
-// e não precisar ver a tela de login.
+// LÓGICA QUE RODA NO CARREGAMENTO DA PÁGINA
+// (Para o caso de o usuário já estar logado)
 // ========================================================================
 window.addEventListener('load', async () => {
-  const loginScreen = document.getElementById('login-screen');
-  const mainContent = document.querySelector('.wrap');
-  const header = document.querySelector('.page-header');
-
   if (window.qlik) {
-    const isAuthenticated = await window.qlik.isAuthenticated();
-    if (isAuthenticated) {
-      // Se o usuário já está logado, esconde a tela de login
-      // e mostra o conteúdo principal imediatamente.
-      console.log("Usuário já autenticado na entrada. Exibindo conteúdo.");
-      loginScreen.style.display = 'none';
-      header.style.display = 'block';
-      mainContent.style.display = 'block';
-    } else {
-      // Se não está autenticado, não fazemos nada.
-      // A própria biblioteca da Qlik irá chamar a função 'showCustomLoginPrompt'
-      // quando tentar renderizar um gráfico.
-      console.log("Usuário não autenticado. Aguardando a Qlik chamar o prompt.");
+    try {
+      const isAuthenticated = await window.qlik.isAuthenticated();
+      if (isAuthenticated) {
+        console.log("Usuário já autenticado. Exibindo conteúdo.");
+        document.getElementById('login-screen').style.display = 'none';
+        document.querySelector('.page-header').style.display = 'block';
+        document.querySelector('.wrap').style.display = 'block';
+      } else {
+        console.log("Usuário não autenticado. Aguardando Qlik pedir confirmação.");
+      }
+    } catch (error) {
+      console.error("Erro ao verificar autenticação inicial:", error);
     }
+  } else {
+    console.error("A biblioteca Qlik não foi carregada. Verifique a CSP e a conexão.");
   }
 });
