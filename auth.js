@@ -11,6 +11,7 @@
           // Fornece feedback visual ao usuário antes do redirecionamento.
           authButton.textContent = 'Redirecionando para autorização...';
           authButton.disabled = true;
+          authButton.style.display = "none";
           
           // Chama a função resolve() para sinalizar à biblioteca do Qlik
           // que a confirmação do usuário foi dada e o redirecionamento pode prosseguir.
