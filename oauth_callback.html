@@ -1,21 +1,12 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Authentication Callback</title>
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('qlik-token');
-
-    if (token && window.opener) {
-      // Envia o token para a janela principal que abriu o popup
-      window.opener.postMessage({ qlikToken: token }, window.location.origin);
-    }
-    
-    // ALTERAÇÃO: Garante que a janela feche em qualquer cenário após a tentativa.
-    window.close();
-  </script>
-</head>
-<body>
-  <p>Autenticando, por favor aguarde...</p>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script
+      crossorigin="anonymous"
+      type="application/javascript"
+      data-host="https://msryx1okj1jicf6.us.qlikcloud.com/"
+      src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/oauth-callback.min.js"
+    ></script>
+  </head>
 </html>
