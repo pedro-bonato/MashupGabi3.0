@@ -4,7 +4,7 @@ import { embed } from "https://esm.sh/@nebula.js/stardust";
 import enigma from "https://esm.sh/enigma.js";
 const schema = await (await fetch("https://unpkg.com/enigma.js/schemas/12.612.0.json")).json();
 
-const appId = "12a47edf-0720-4f61-9cd7-209ec32eadfc"; // CONFIRME SE ESTE É O ID DO SEU APP
+const appId = "12a47edf-0720-4f61-9cd7-209ec32eadfc"; 
 const qlikHost = "msryx1okj1jicf6.us.qlikcloud.com";
 
 // Função para abrir pop-up de login
@@ -12,7 +12,7 @@ async function iniciarAutorizacao() {
   return new Promise((resolve, reject) => {
     // ALTERAÇÃO: Construindo a URL de redirect de forma explícita e completa.
     // Isso evita qualquer ambiguidade sobre o endereço do callback.
-    const redirectUri = `${window.location.origin}/oauth_callback.html`;
+const redirectUri = `${window.location.origin}/MashupGabi3.0/oauth_callback.html`;
 
     const authUrl = `https://${qlikHost}/login?redirect_uri=${encodeURIComponent(redirectUri)}`;
 
