@@ -1,83 +1,47 @@
-// nebula.js (VERSÃO FINAL COM POP-UP)
+// nebula_integration.js
 
+// Importamos a função 'embed' do Nebula, como antes.
 import { embed } from "https://esm.sh/@nebula.js/stardust";
-import enigma from "https://esm.sh/enigma.js";
-const schema = await (await fetch("https://unpkg.com/enigma.js/schemas/12.612.0.json")).json();
 
-const appId = "12a47edf-0720-4f61-9cd7-209ec32eadfc"; 
-const qlikHost = "msryx1okj1jicf6.us.qlikcloud.com";
+// --- CONFIGURAÇÃO PARA OS OBJETOS NEBULA ---
+// Defina aqui qual App e Objeto você quer renderizar com Nebula.
+// Usei os mesmos do <qlik-embed> que substituímos como exemplo.
+const NEBULA_APP_ID = "e84c7d4c-b8c1-40a6-b3c2-1df068af26fc";
+const NEBULA_OBJECT_ID = "AUAXLqT";
+const NEBULA_TARGET_DIV_ID = "nebula-gestao-recursos";
 
-// Função para abrir pop-up de login
-async function iniciarAutorizacao() {
-  return new Promise((resolve, reject) => {
-    // ALTERAÇÃO: Construindo a URL de redirect de forma explícita e completa.
-    // Isso evita qualquer ambiguidade sobre o endereço do callback.
-const redirectUri = `https://pedro-bonato.github.io/MashupGabi3.0/oauth_callback.html`;
-
-    const authUrl = `https://${qlikHost}/login?redirect_uri=${encodeURIComponent(redirectUri)}`;
-
-    const authWindow = window.open(authUrl, "_blank", "width=600,height=600");
-
-    const listener = (event) => {
-      // Verificação de segurança: a mensagem deve vir da nossa própria origem.
-      if (event.origin !== window.location.origin) {
-        return;
-      }
-
-      if (event.data?.qlikToken) {
-        window.removeEventListener("message", listener);
-        // O pop-up deve se fechar sozinho, mas garantimos aqui se necessário.
-        if (authWindow) {
-          authWindow.close();
-        }
-        resolve(event.data.qlikToken);
-      }
-    };
-
-    window.addEventListener("message", listener);
-  });
-}
-
-// Verifica token ou faz login
-async function obterToken() {
-  let token = sessionStorage.getItem("qlik-token");
-  if (!token) {
-    token = await iniciarAutorizacao();
-    sessionStorage.setItem("qlik-token", token);
-  }
-  return token;
-}
-
-// Inicializa Nebula com Enigma
-async function iniciarNebula(token) {
+// A função principal que será executada
+async function runNebula() {
   try {
-    const session = enigma.create({
-      schema,
-      url: `wss://${qlikHost}/app/${appId}`,
-      createSocket: (url) =>
-        new WebSocket(url, { headers: { Authorization: `Bearer ${token}` } }),
-    });
+    console.log("Aguardando o serviço Qlik Embed ficar pronto...");
 
-    const global = await session.open();
-    const app = await global.openDoc(appId);
+    // 1. Espera a biblioteca qlik-embed (carregada no head) ficar pronta e autenticada.
+    // O 'qlik' é um objeto global que a biblioteca cria.
+    const qlik = await window.qlik.getService();
+
+    console.log("Serviço Qlik pronto. Abrindo o app para o Nebula...");
+    
+    // 2. Com o serviço autenticado, pedimos para ele abrir uma conexão com o app específico
+    // que queremos usar para os nossos gráficos Nebula.
+    const app = await qlik.openApp(NEBULA_APP_ID);
+
+    console.log("App aberto com sucesso. Entregando para o Nebula.js.");
+
+    // 3. Com o objeto 'app' em mãos, o resto é o fluxo padrão do Nebula.
     const n = embed(app);
 
-    n.render({ element: document.getElementById("chart1"), id: "jcgWmpm" }); // Substitua os IDs
-    n.render({ element: document.getElementById("chart2"), id: "XXXXXXX" });
-    n.render({ element: document.getElementById("chart3"), id: "YYYYYYY" });
-    n.render({ element: document.getElementById("chart4"), id: "ZZZZZZZ" });
-  } catch (err) {
-    console.error("Erro carregando Nebula:", err);
-    document.body.innerHTML = `<h1>Ocorreu um erro ao conectar com o Qlik</h1><pre>${err.message}</pre>`;
+    // 4. Renderiza o objeto desejado na nossa <div> alvo.
+    n.render({
+      element: document.getElementById(NEBULA_TARGET_DIV_ID),
+      id: NEBULA_OBJECT_ID,
+    });
+
+    console.log(`Gráfico ${NEBULA_OBJECT_ID} renderizado com Nebula!`);
+
+  } catch (error) {
+    console.error("Ocorreu um erro ao integrar o Nebula.js:", error);
   }
 }
 
-// Executa fluxo
-(async () => {
-  try {
-    const token = await obterToken();
-    await iniciarNebula(token);
-  } catch (error) {
-    console.error("Falha no fluxo de autenticação:", error);
-  }
-})();
+// Inicia todo o processo.
+runNebula();

@@ -1,64 +1,48 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Validador Mashup</title>
-  <link rel="stylesheet" href="index.css" />
-</head>
+  <script
+    crossorigin="anonymous"
+    type="application/javascript"
+    src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/index.min.js"
+    data-host="https://msryx1okj1jicf6.us.qlikcloud.com"
+    data-client-id="09d86c449ca034586e04fb47e3b5703e"
+    data-redirect-uri="https://pedro-bonato.github.io/MashupGabi3.0/oauth_callback.html"
+    data-access-token-storage="session"
+  ></script>
+  </head>
 <body>
 
-  <header class="page-header">
-    <img src="cresol-branca.png" alt="Cresol">
-  </header>
-  <a href="https://msryx1okj1jicf6.us.qlikcloud.com/login?redirect_uri=https%3A%2F%2Fpedro-bonato.github.io%2FMashupGabi3.0%2Foauth_callback.html"
-   target="_blank">
-  CLIQUE AQUI PARA TESTAR O LOGIN
-</a>
-
-  <main class="wrap">
-    <div class="viewport">
-      <div class="slider" id="slider">
-
-        <div class="card">
-          <div class="card-header">
-            <h2 class="card-title">Depósitos</h2>
-            <p class="card-subtitle">RDC, LCA, DV e Poupança</p>
-          </div>
-          <div class="card-body">
-            <div class="metric">
-              <p class="metric-label">Planejamento Comercial</p>
-              <div id="chart1"></div>
-            </div>
-            <div class="metric">
-              <p class="metric-label">Gestão de Recursos</p>
-              <div id="chart2"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <h2 class="card-title">Crédito</h2>
-            <p class="card-subtitle">Operações de Crédito</p>
-          </div>
-          <div class="card-body">
-            <div class="metric">
-              <p class="metric-label">Planejamento Comercial</p>
-              <div id="chart3"></div>
-            </div>
-            <div class="metric">
-              <p class="metric-label">Gestão de Recursos</p>
-              <div id="chart4"></div>
-            </div>
-          </div>
-        </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="title-group">
+        <h2 class="card-title">Depósitos</h2>
+        <p class="card-subtitle">RDC, LCA, DV e Poupança</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="metric">
+        <p class="metric-label">Planejamento Comercial</p>
+        <qlik-embed
+            ui="analytics/chart"
+            app-id="12a47edf-0720-4f61-9cd7-209ec32eadfc"
+            object-id="mkmZSy"
+            show-selections-bar="false"
+            show-title="false"
+            show-toolbar="false"
+        ></qlik-embed>
+      </div>
+      <div class="metric">
+        <p class="metric-label">Gestão de Recursos (com Nebula.js)</p> <div id="nebula-gestao-recursos" style="height: 100%; width: 100%;"></div>
 
       </div>
     </div>
+    <div class="card-footer"></div>
+  </div>
+
   </main>
 
   <script src="carrossel.js"></script>
-  <script type="module" src="nebula.js"></script>
+  <script type="module" src="nebula_integration.js"></script>
 </body>
 </html>
