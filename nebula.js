@@ -7,7 +7,7 @@ import enigma from "https://esm.sh/enigma.js";
 // CORRIGIDO: Voltamos a usar 'fetch' para carregar o schema, que é a forma correta no navegador.
 const schema = await (await fetch("https://unpkg.com/enigma.js/schemas/12.612.0.json")).json();
 
-const appId = "e84c7d4c-b8c1-40a6-b3c2-1df068af26fc";
+const appId = "12a47edf-0720-4f61-9cd7-209ec32eadfc";
 const qlikHost = "msryx1okj1jicf6.us.qlikcloud.com";
 
 // Função para abrir popup de login e obter token
@@ -59,10 +59,10 @@ async function iniciarNebula(token) {
     const n = embed(app);
 
     // Lembre-se de usar os IDs corretos dos seus objetos Qlik
-    n.render({ element: document.getElementById("chart1"), id: "AUAXLqT" });
-    n.render({ element: document.getElementById("chart2"), id: "XXXXXXX" });
-    n.render({ element: document.getElementById("chart3"), id: "YYYYYYY" });
-    n.render({ element: document.getElementById("chart4"), id: "ZZZZZZZ" });
+    n.render({ element: document.getElementById("chart1"), id: "mkmZSy" });
+    n.render({ element: document.getElementById("chart2"), id: "RsPkm" });
+    n.render({ element: document.getElementById("chart3"), id: "jcgWmpm" });
+    n.render({ element: document.getElementById("chart4"), id: "hzyZuj" });
 
   } catch (err) {
     console.error("Erro carregando Nebula:", err);
