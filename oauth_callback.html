@@ -3,17 +3,16 @@
 <head>
   <title>Authentication Callback</title>
   <script>
-    // Extrai o token da URL
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('qlik-token');
 
     if (token && window.opener) {
       // Envia o token para a janela principal que abriu o popup
       window.opener.postMessage({ qlikToken: token }, window.location.origin);
-    } else {
-      // Fecha a janela se não houver token
-      window.close();
     }
+    
+    // ALTERAÇÃO: Garante que a janela feche em qualquer cenário após a tentativa.
+    window.close();
   </script>
 </head>
 <body>
