@@ -12,7 +12,7 @@ async function iniciarAutorizacao() {
   return new Promise((resolve, reject) => {
     // ALTERAÇÃO: Construindo a URL de redirect de forma explícita e completa.
     // Isso evita qualquer ambiguidade sobre o endereço do callback.
-const redirectUri = `${window.location.origin}/MashupGabi3.0/oauth_callback.html`;
+const redirectUri = `https://pedro-bonato.github.io/MashupGabi3.0/oauth_callback.html`;
 
     const authUrl = `https://${qlikHost}/login?redirect_uri=${encodeURIComponent(redirectUri)}`;
 
